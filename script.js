@@ -19,15 +19,14 @@ const generateSrc = () => {
     })
     .then((res) => {
       img.src = res.data.images.original.url
-      img.style.display = 'block'
     })
     .catch((err) => {
-      console.error('Error fetching data:', err)
-      window.alert(err.message)
-      img.style.display = 'none'
+      window.alert('An error occured! Check your internet connection.')
     })
     .finally(() => {
       loader.style.display = 'none'
+      // in case of an error, previous gif continues displaying
+      img.style.display = 'block'
     })
 }
 
