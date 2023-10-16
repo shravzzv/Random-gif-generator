@@ -34,6 +34,7 @@ const generateSrc = () => {
 }
 
 const radomize = (e) => {
+  search.value = ''
   img.style.display = 'none'
   loader.style.display = 'inline-block'
   generateSrc()

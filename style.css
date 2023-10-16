@@ -21,6 +21,7 @@ body {
     #e94057,
     #8a2387
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: relative;
 }
 
 main {
@@ -110,7 +111,10 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
   width: 100%;
   padding: 20px 0 0;
+  position: fixed;
+  bottom: 50px;
 }
