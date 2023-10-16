@@ -1,13 +1,16 @@
 const img = document.querySelector('img')
 const btn = document.querySelector('button')
 const loader = document.querySelector('.loader')
-const URL = 'https://api.giphy.com/v1/gifs/random'
+const search = document.querySelector('input')
+
 const API_KEY = 'uDu77HHFhXrEpWJCGuI83p9YtVnbhQAf'
 // free api key
 
 const generateSrc = () => {
+  const URL = 'https://api.giphy.com/v1/gifs/random'
   loader.style.display = 'inline-block'
   img.style.display = 'none'
+
   fetch(`${URL}?api_key=${API_KEY}`, {
     mode: 'cors',
   })
@@ -36,6 +39,29 @@ const radomize = (e) => {
   generateSrc()
 }
 
+const handleSearch = (e) => {
+  const url = 'https://api.giphy.com/v1/gifs/search'
+  const query = e.target.value.trim()
+  loader.style.display = 'inline-block'
+  img.style.display = 'none'
+
+  if (query === '') {
+    generateSrc()
+    return
+  }
+
+  fetch(`${url}?api_key=${API_KEY}&q=${query}`)
+    .then((res) => res.json())
+    .then((res) => (img.src = res.data[0].images.original.url))
+    .catch((err) => console.error(err))
+    .finally(() => {
+      loader.style.display = 'none'
+      img.style.display = 'block'
+    })
+}
+
 btn.addEventListener('click', radomize)
+
+search.addEventListener('input', handleSearch)
 
 generateSrc()
