@@ -21,6 +21,7 @@ body {
     #e94057,
     #8a2387
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: relative;
 }
 
 main {
@@ -39,9 +40,9 @@ img {
   max-height: 80vh;
 }
 
-button {
+button,
+input {
   cursor: pointer;
-  margin-top: 25px;
   border-radius: 5px;
   background-color: white;
   border: 1px solid rgb(209, 213, 219);
@@ -104,4 +105,16 @@ button:hover {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.interactions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0 0;
+  position: fixed;
+  bottom: 50px;
 }
