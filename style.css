@@ -36,6 +36,7 @@ img {
   max-width: 100%;
   animation: fadeIn 300ms ease;
   background-color: transparent;
+  max-height: 80vh;
 }
 
 button {
