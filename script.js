@@ -17,15 +17,13 @@ const generateSrc = async () => {
     img.src = data.data.images.original.url
   } catch (error) {
     console.error(error)
+  } finally {
+    UIloadingFinished()
   }
-
-  UIloadingFinished()
 }
 
 const radomize = (e) => {
   search.value = ''
-  img.style.display = 'none'
-  loader.style.display = 'inline-block'
   generateSrc()
 }
 
@@ -44,9 +42,9 @@ const handleSearch = async (query) => {
     }
   } catch (error) {
     console.error(error)
+  } finally {
+    UIloadingFinished()
   }
-
-  UIloadingFinished()
 }
 
 const UIloading = () => {
