@@ -6,6 +6,21 @@ const search = document.querySelector('input')
 const API_KEY = 'uDu77HHFhXrEpWJCGuI83p9YtVnbhQAf'
 // free api key
 
+const UIloading = () => {
+  loader.style.display = 'inline-block'
+  img.style.display = 'none'
+}
+
+const UIloadingFinished = () => {
+  loader.style.display = 'none'
+  img.style.display = 'block'
+}
+
+const radomize = (e) => {
+  search.value = ''
+  generateSrc()
+}
+
 const generateSrc = async () => {
   const URL = 'https://api.giphy.com/v1/gifs/random'
   UIloading()
@@ -20,11 +35,6 @@ const generateSrc = async () => {
   } finally {
     UIloadingFinished()
   }
-}
-
-const radomize = (e) => {
-  search.value = ''
-  generateSrc()
 }
 
 const handleSearch = async (query) => {
@@ -45,16 +55,6 @@ const handleSearch = async (query) => {
   } finally {
     UIloadingFinished()
   }
-}
-
-const UIloading = () => {
-  loader.style.display = 'inline-block'
-  img.style.display = 'none'
-}
-
-const UIloadingFinished = () => {
-  loader.style.display = 'none'
-  img.style.display = 'block'
 }
 
 btn.addEventListener('click', radomize)
