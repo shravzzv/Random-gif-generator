@@ -8,22 +8,18 @@ const API_KEY = 'uDu77HHFhXrEpWJCGuI83p9YtVnbhQAf'
 
 const generateSrc = async () => {
   const URL = 'https://api.giphy.com/v1/gifs/random'
-
-  loader.style.display = 'inline-block'
-  img.style.display = 'none'
+  UIloading()
 
   try {
     const res = await fetch(`${URL}?api_key=${API_KEY}`)
     if (!res.ok) throw new Error('Network response was not OK')
     const data = await res.json()
     img.src = data.data.images.original.url
-  } catch (err) {
-    window.alert('An error occured! Check your internet connection.')
-    console.error(err)
+  } catch (error) {
+    console.error(error)
   }
 
-  loader.style.display = 'none'
-  img.style.display = 'block'
+  UIloadingFinished()
 }
 
 const radomize = (e) => {
@@ -33,44 +29,42 @@ const radomize = (e) => {
   generateSrc()
 }
 
-const handleSearch = (e) => {
+const handleSearch = async (query) => {
   const url = 'https://api.giphy.com/v1/gifs/search'
-  const query = e.target.value.trim()
-  loader.style.display = 'inline-block'
-  img.style.display = 'none'
+  UIloading()
 
-  if (query === '') {
-    generateSrc()
-    return
+  try {
+    const res = await fetch(`${url}?api_key=${API_KEY}&q=${query}`)
+    if (!res.ok) throw new Error('Network response was not OK')
+    const data = await res.json()
+    if (data.data.length < 1) {
+      throw new Error('Invalid search input')
+    } else {
+      img.src = data.data[0].images.original.url
+    }
+  } catch (error) {
+    console.error(error)
   }
 
-  fetch(`${url}?api_key=${API_KEY}&q=${query}`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error('Network response was not OK')
-      }
-      return res.json()
-    })
-    .then((res) => {
-      if (res.data.length < 1) {
-        throw new Error('Invalid search input')
-      } else {
-        img.src = res.data[0].images.original.url
-      }
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-    .finally(() => {
-      loader.style.display = 'none'
-      img.style.display = 'block'
-    })
+  UIloadingFinished()
+}
+
+const UIloading = () => {
+  loader.style.display = 'inline-block'
+  img.style.display = 'none'
+}
+
+const UIloadingFinished = () => {
+  loader.style.display = 'none'
+  img.style.display = 'block'
 }
 
 btn.addEventListener('click', radomize)
 
-search.addEventListener('input', handleSearch)
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  generateSrc()
+search.addEventListener('input', (e) => {
+  if (e.target.value.trim()) {
+    handleSearch(e.target.value)
+  }
 })
+
+document.addEventListener('DOMContentLoaded', generateSrc)
