@@ -25,6 +25,7 @@ const generateSrc = () => {
     })
     .catch((err) => {
       window.alert('An error occured! Check your internet connection.')
+      console.error(err)
     })
     .finally(() => {
       loader.style.display = 'none'
@@ -52,9 +53,23 @@ const handleSearch = (e) => {
   }
 
   fetch(`${url}?api_key=${API_KEY}&q=${query}`)
-    .then((res) => res.json())
-    .then((res) => (img.src = res.data[0].images.original.url))
-    .catch((err) => console.error(err))
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error('Network response was not OK')
+      }
+      return res.json()
+    })
+    .then((res) => {
+      console.log(res.data)
+      if (res.data.length < 1) {
+        throw new Error('Invalid search input')
+      } else {
+        img.src = res.data[0].images.original.url
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
     .finally(() => {
       loader.style.display = 'none'
       img.style.display = 'block'
@@ -65,4 +80,6 @@ btn.addEventListener('click', radomize)
 
 search.addEventListener('input', handleSearch)
 
-generateSrc()
+document.addEventListener('DOMContentLoaded', (event) => {
+  generateSrc()
+})
