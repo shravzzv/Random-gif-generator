@@ -60,7 +60,6 @@ const handleSearch = (e) => {
       return res.json()
     })
     .then((res) => {
-      console.log(res.data)
       if (res.data.length < 1) {
         throw new Error('Invalid search input')
       } else {
