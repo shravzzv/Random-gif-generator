@@ -3,8 +3,7 @@ const btn = document.querySelector('button')
 const loader = document.querySelector('.loader')
 const search = document.querySelector('input')
 
-const API_KEY = 'uDu77HHFhXrEpWJCGuI83p9YtVnbhQAf'
-// free api key
+const API_KEY = 'yvcYqKtY72zleW24g662KrAijtU0WUrj'
 
 const UIloading = () => {
   loader.style.display = 'inline-block'
