@@ -3,7 +3,7 @@ const btn = document.querySelector('button')
 const loader = document.querySelector('.loader')
 const search = document.querySelector('input')
 
-const API_KEY = 'yvcYqKtY72zleW24g662KrAijtU0WUrj'
+const BASE = 'https://giphy-proxy.saishravan384.workers.dev'
 
 const UIloading = () => {
   loader.style.display = 'inline-block'
@@ -15,17 +15,16 @@ const UIloadingFinished = () => {
   img.style.display = 'block'
 }
 
-const radomize = (e) => {
+const radomize = () => {
   search.value = ''
   generateSrc()
 }
 
 const generateSrc = async () => {
-  const URL = 'https://api.giphy.com/v1/gifs/random'
   UIloading()
 
   try {
-    const res = await fetch(`${URL}?api_key=${API_KEY}`)
+    const res = await fetch(`${BASE}/random`)
     if (!res.ok) throw new Error('Network response was not OK')
     const data = await res.json()
     img.src = data.data.images.original.url
@@ -37,18 +36,16 @@ const generateSrc = async () => {
 }
 
 const handleSearch = async (query) => {
-  const url = 'https://api.giphy.com/v1/gifs/search'
   UIloading()
 
   try {
-    const res = await fetch(`${url}?api_key=${API_KEY}&q=${query}`)
+    const res = await fetch(`${BASE}/search?q=${encodeURIComponent(query)}`)
     if (!res.ok) throw new Error('Network response was not OK')
     const data = await res.json()
-    if (data.data.length < 1) {
+    if (!data.data || data.data.length < 1) {
       throw new Error('Invalid search input')
-    } else {
-      img.src = data.data[0].images.original.url
     }
+    img.src = data.data[0].images.original.url
   } catch (error) {
     console.error(error)
   } finally {
